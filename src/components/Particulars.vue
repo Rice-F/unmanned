@@ -5,18 +5,16 @@
       </router-link>
       <div class="p-content">
         <div class="p-info">
-          <img src="../assets/images/product.jpg" alt="">
-          <h2>蛋糕奶茶</h2>
-          <p class="price">22.00/杯</p>
+          <img :src="api + list.img_url" alt="">
+          <h2>{{list.title}}</h2>
+          <p class="price">{{list.price}}杯</p>
         </div>
         <div class="p-detial">
           <h3>商品详情</h3>
-          <div class="p-detail-content">
-            <img src="../assets/images/product.jpg"/>
-            <br />
-            <p>韩国辣酱海鲜炒面,青椒炒牛肉,芦笋腰果炒虾仁,『家常料理』简单又好吃的辣炒起司年糕鸡排</p>
-            <br />
-            <p>韩国辣酱海鲜炒面,青椒炒牛肉,芦笋腰果炒虾仁,『家常料理』简单又好吃的辣炒起司年糕鸡排</p>
+          <div
+            class="p-detail-content"
+            v-html="list.content"
+          >
           </div>
         </div>
         <footer class="p-footer">
@@ -37,7 +35,29 @@
 </template>
 
 <script>
+import Config from '../model/config'
 export default {
+  mounted () {
+    // get传值
+    var id = this.$route.query.id
+    this.requestData(id)
+  },
+  data () {
+    return {
+      api: Config.api,
+      list: []
+    }
+  },
+  methods: {
+    requestData (id) {
+      var api = this.api + 'api/productcontent?id=' + id
+      this.$http.get(api).then((response) => {
+        this.list = response.body.result[0]
+      }, (err) => {
+        console.log(err)
+      })
+    }
+  }
 }
 </script>
 

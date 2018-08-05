@@ -147,10 +147,7 @@
           </div>
         </div>
       </div>
-      <div class="footer-nav">
-        <img src="../assets/images/navigation.png"/>
-        <p>导航</p>
-      </div>
+      <nav-footer></nav-footer>
       <div class="footer-menu">
         <img src="../assets/images/menu.png"/>
         <p>菜单</p>
@@ -163,7 +160,11 @@
 </template>
 
 <script>
+import NavFooter from './public/NavFooter'
 export default {
+  components: {
+    NavFooter
+  }
 }
 </script>
 

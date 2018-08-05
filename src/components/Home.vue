@@ -18,12 +18,10 @@
     </header>
     <aside class="left-cate">
       <ul>
-        <li>精品美食</li>
-        <li>精品小面</li>
-        <li>饮料酒水</li>
-        <li>新品推荐</li>
-        <li>舌尖美食</li>
-        <li>厨师长推荐</li>
+        <li
+          v-for="item in list"
+          :key="item._id"
+        >{{item.title}}</li>
       </ul>
       <div class="nav-cate">
         <img src="../assets/images/nav.png" alt="">
@@ -31,177 +29,77 @@
       </div>
     </aside>
     <div class="content">
-      <div class="item">
-        <h3 class="item-cate">皮蛋瘦肉粥</h3>
+      <div
+        class="item"
+        v-for="item in list"
+        :key="item._id"
+      >
+        <h3 class="item-cate">{{item.title}}</h3>
         <ul class="item-list">
-          <li>
+          <li
+            v-for="dish in item.list"
+            :key="dish._id"
+          >
             <div class="wrap">
-              <router-link to="/particulars">
-                <img src="../assets/images/1.jpg" alt="">
-                <p class="title">大蒜腊肉</p>
-                <p class="price">￥26</p>
+              <router-link :to="'/particulars?id=' + dish._id">
+                <img :src="api + dish.img_url" alt="">
+                <p class="title">{{dish.title}}</p>
+                <p class="price">{{dish.price}}</p>
               </router-link>
-            </div>
-          </li>
-          <li>
-            <div class="wrap">
-              <img src="../assets/images/1.jpg" alt="">
-              <p class="title">大蒜腊肉</p>
-              <p class="price">￥26</p>
-            </div>
-          </li>
-          <li>
-            <div class="wrap">
-              <img src="../assets/images/1.jpg" alt="">
-              <p class="title">大蒜腊肉</p>
-              <p class="price">￥26</p>
-            </div>
-          </li>
-          <li>
-            <div class="wrap">
-              <img src="../assets/images/1.jpg" alt="">
-              <p class="title">大蒜腊肉</p>
-              <p class="price">￥26</p>
-            </div>
-          </li>
-          <li>
-            <div class="wrap">
-              <img src="../assets/images/1.jpg" alt="">
-              <p class="title">大蒜腊肉</p>
-              <p class="price">￥26</p>
-            </div>
-          </li>
-          <li>
-            <div class="wrap">
-              <img src="../assets/images/1.jpg" alt="">
-              <p class="title">大蒜腊肉</p>
-              <p class="price">￥26</p>
-            </div>
-          </li>
-          <li>
-            <div class="wrap">
-              <img src="../assets/images/1.jpg" alt="">
-              <p class="title">大蒜腊肉</p>
-              <p class="price">￥26</p>
-            </div>
-          </li>
-        </ul>
-      </div>
-      <div class="item">
-        <h3 class="item-cate">皮蛋瘦肉粥</h3>
-        <ul class="item-list">
-          <li>
-            <div class="wrap">
-              <img src="../assets/images/1.jpg" alt="">
-              <p class="title">大蒜腊肉</p>
-              <p class="price">￥26</p>
-            </div>
-          </li>
-          <li>
-            <div class="wrap">
-              <img src="../assets/images/1.jpg" alt="">
-              <p class="title">大蒜腊肉</p>
-              <p class="price">￥26</p>
-            </div>
-          </li>
-          <li>
-            <div class="wrap">
-              <img src="../assets/images/1.jpg" alt="">
-              <p class="title">大蒜腊肉</p>
-              <p class="price">￥26</p>
-            </div>
-          </li>
-          <li>
-            <div class="wrap">
-              <img src="../assets/images/1.jpg" alt="">
-              <p class="title">大蒜腊肉</p>
-              <p class="price">￥26</p>
-            </div>
-          </li>
-          <li>
-            <div class="wrap">
-              <img src="../assets/images/1.jpg" alt="">
-              <p class="title">大蒜腊肉</p>
-              <p class="price">￥26</p>
-            </div>
-          </li>
-          <li>
-            <div class="wrap">
-              <img src="../assets/images/1.jpg" alt="">
-              <p class="title">大蒜腊肉</p>
-              <p class="price">￥26</p>
-            </div>
-          </li>
-          <li>
-            <div class="wrap">
-              <img src="../assets/images/1.jpg" alt="">
-              <p class="title">大蒜腊肉</p>
-              <p class="price">￥26</p>
-            </div>
-          </li>
-        </ul>
-      </div>
-      <div class="item">
-        <h3 class="item-cate">皮蛋瘦肉粥</h3>
-        <ul class="item-list">
-          <li>
-            <div class="wrap">
-              <img src="../assets/images/1.jpg" alt="">
-              <p class="title">大蒜腊肉</p>
-              <p class="price">￥26</p>
-            </div>
-          </li>
-          <li>
-            <div class="wrap">
-              <img src="../assets/images/1.jpg" alt="">
-              <p class="title">大蒜腊肉</p>
-              <p class="price">￥26</p>
-            </div>
-          </li>
-          <li>
-            <div class="wrap">
-              <img src="../assets/images/1.jpg" alt="">
-              <p class="title">大蒜腊肉</p>
-              <p class="price">￥26</p>
-            </div>
-          </li>
-          <li>
-            <div class="wrap">
-              <img src="../assets/images/1.jpg" alt="">
-              <p class="title">大蒜腊肉</p>
-              <p class="price">￥26</p>
-            </div>
-          </li>
-          <li>
-            <div class="wrap">
-              <img src="../assets/images/1.jpg" alt="">
-              <p class="title">大蒜腊肉</p>
-              <p class="price">￥26</p>
-            </div>
-          </li>
-          <li>
-            <div class="wrap">
-              <img src="../assets/images/1.jpg" alt="">
-              <p class="title">大蒜腊肉</p>
-              <p class="price">￥26</p>
-            </div>
-          </li>
-          <li>
-            <div class="wrap">
-              <img src="../assets/images/1.jpg" alt="">
-              <p class="title">大蒜腊肉</p>
-              <p class="price">￥26</p>
             </div>
           </li>
         </ul>
       </div>
     </div>
     <div class="bg"></div>
+    <nav-footer></nav-footer>
   </div>
 </template>
 
 <script>
+import NavFooter from './public/NavFooter'
+import Config from '../model/config'
 export default {
+  mounted () {
+    this.asideDomInit()
+    this.requestData()
+  },
+  data () {
+    return {
+      list: [],
+      api: Config.api
+    }
+  },
+  components: {
+    NavFooter
+  },
+  methods: {
+    asideDomInit () {
+      var leftCate = document.getElementsByClassName('left-cate')[0]
+      var navCate = document.getElementsByClassName('nav-cate')[0]
+      var bg = document.getElementsByClassName('bg')[0]
+      var flag = true
+      bg.onclick = navCate.onclick = function () {
+        if (flag) {
+          flag = false
+          leftCate.style.transform = 'translate(0, 0)'
+          bg.style.display = 'block'
+        } else {
+          flag = true
+          leftCate.style.transform = 'translate(-100%, 0)'
+          bg.style.display = 'none'
+        }
+      }
+    },
+    requestData () {
+      var api = this.api + 'api/productlist'
+      // 注意这里的this指向，箭头函数里的this指向继承自父元素
+      this.$http.get(api).then(response => {
+        this.list = response.body.result
+      }, response => {
+      })
+    }
+  }
 }
 </script>
 
