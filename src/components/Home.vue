@@ -19,8 +19,9 @@
     <aside class="left-cate">
       <ul>
         <li
-          v-for="item in list"
+          v-for="(item, key) in list"
           :key="item._id"
+          @click="changeList(key)"
         >{{item.title}}</li>
       </ul>
       <div class="nav-cate">
@@ -98,6 +99,17 @@ export default {
         this.list = response.body.result
       }, response => {
       })
+    },
+    changeList (key) {
+      // 点击侧边栏item时获取相应下标，对应右边同下标分类title
+      // 使右边对应内容距离页面顶部距离等于滚动条滚动距离即可
+      var itemCates = document.querySelectorAll('.item-cate')
+      document.documentElement.scrollTop = itemCates[key].offsetTop
+      // 正确显示右边对应分类后，背景层和侧边栏隐藏
+      var leftCate = document.getElementsByClassName('left-cate')[0]
+      var bg = document.getElementsByClassName('bg')[0]
+      leftCate.style.transform = 'translate(-100%, 0)'
+      bg.style.display = 'none'
     }
   }
 }
@@ -137,7 +149,7 @@ aside.left-cate {
   width: 6rem;
   height: 100%;
   background: #eee;
-  transition: all 1s;
+  transition: all .5s;
   transform: translate(-100%, 0);
   ul {
     z-index: 3;
