@@ -53,7 +53,9 @@
       </div>
     </div>
     <div class="bg"></div>
-    <nav-footer></nav-footer>
+    <nav-footer
+      :cartNum = "cartNum"
+    ></nav-footer>
   </div>
 </template>
 
@@ -64,11 +66,13 @@ export default {
   mounted () {
     this.asideDomInit()
     this.requestData()
+    this.getCartNum()
   },
   data () {
     return {
       list: [],
-      api: Config.api
+      api: Config.api,
+      cartNum: 0
     }
   },
   components: {
@@ -110,6 +114,14 @@ export default {
       var bg = document.getElementsByClassName('bg')[0]
       leftCate.style.transform = 'translate(-100%, 0)'
       bg.style.display = 'none'
+    },
+    getCartNum () {
+      // 获取购物车点菜总数量
+      var api = this.api + 'api/cartCount?uid = a001'
+      this.$http.get(api).then((response) => {
+        console.log(response)
+        this.cartNum = response.body.result
+      })
     }
   }
 }
@@ -201,8 +213,12 @@ aside.left-cate {
         background: #fff;
         border-radius: .5rem;
         overflow: hidden;
+        a {
+          color: #666;
+        }
         img {
           width: 100%;
+          height: 6rem;
         }
         p {
           padding: .2rem .5rem;

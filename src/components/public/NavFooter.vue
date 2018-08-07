@@ -10,6 +10,10 @@
       <div class="footer-cart">
         <img src="../../assets/images/cart.png" alt="">
         <p>购物车</p>
+        <span
+          class="num"
+          v-if="cartNum"
+        >{{cartNum}}</span>
       </div>
       <div
         class="footer-nav-show"
@@ -47,7 +51,10 @@ export default {
     return {
       flag: false
     }
-  }
+  },
+  props: [
+    'cartNum'
+  ]
 }
 </script>
 
@@ -91,6 +98,20 @@ export default {
   p {
     position: relative;
     bottom: .2rem;
+  }
+  .num {
+    position: absolute;
+    top: -.5rem;
+    right: -.5rem;
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+    line-height: 2rem;
+    text-align: center;
+    color: #fff;
+    background: #b30000;
+    border-radius: 50%;
+
   }
 }
 .footer-nav-show {

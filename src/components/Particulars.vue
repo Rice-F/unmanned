@@ -7,7 +7,7 @@
         <div class="p-info">
           <img :src="api + list.img_url" alt="">
           <h2>{{list.title}}</h2>
-          <p class="price">{{list.price}}杯</p>
+          <p class="price">{{list.price}}/份</p>
         </div>
         <div class="p-detial">
           <h3>商品详情</h3>
@@ -21,14 +21,24 @@
           <div class="cart">
             <strong>数量:</strong>
             <div class="cart-num">
-              <div class="input-minus">-</div>
-              <input class="input-amount" value="1">
-              <div class="input-plus">+</div>
+              <div
+                class="input-minus"
+                @click="minusNum()"
+              >-</div>
+              <input
+                class="input-amount"
+                v-model="num"
+              >
+              <div
+                class="input-plus"
+                @click="plusNum()"
+              >+</div>
             </div>
           </div>
-          <router-link to="home">
-            <button class="addcart">加入购物车</button>
-          </router-link>
+          <button
+            class="addcart"
+            @click="addCart()"
+          >加入购物车</button>
         </footer>
       </div>
     </div>
@@ -45,7 +55,8 @@ export default {
   data () {
     return {
       api: Config.api,
-      list: []
+      list: [],
+      num: 1
     }
   },
   methods: {
@@ -53,6 +64,32 @@ export default {
       var api = this.api + 'api/productcontent?id=' + id
       this.$http.get(api).then((response) => {
         this.list = response.body.result[0]
+      }, (err) => {
+        console.log(err)
+      })
+    },
+    minusNum () {
+      if (this.num > 1) {
+        --this.num
+      }
+    },
+    plusNum () {
+      ++this.num
+    },
+    addCart () {
+      // 将桌号、菜品名称、价格、数量、菜品id及对应图片post
+      var api = this.api + 'api/addcart'
+      this.$http.post(api, {
+        uid: 'a001',
+        title: this.list.title,
+        price: this.list.price,
+        num: this.num,
+        productId: this.list._id,
+        imgUrl: this.list.img_url
+      }).then((response) => {
+        if (response.body.success) {
+          this.$router.push({path: 'home'})
+        }
       }, (err) => {
         console.log(err)
       })
@@ -165,6 +202,9 @@ export default {
         text-align: center;
       }
     }
+  }
+  a {
+    color: #fff;
   }
   .addcart {
     float: right;
