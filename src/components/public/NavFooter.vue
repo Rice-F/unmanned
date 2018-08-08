@@ -8,12 +8,14 @@
         <p>导航</p>
       </div>
       <div class="footer-cart">
-        <img src="../../assets/images/cart.png" alt="">
-        <p>购物车</p>
-        <span
-          class="num"
-          v-if="cartNum"
-        >{{cartNum}}</span>
+        <router-link to="/cart">
+          <img src="../../assets/images/cart.png" alt="">
+          <p>购物车</p>
+          <span
+            class="num"
+            v-if="cartNum"
+          >{{cartNum}}</span>
+        </router-link>
       </div>
       <div
         class="footer-nav-show"
@@ -98,6 +100,7 @@ export default {
   p {
     position: relative;
     bottom: .2rem;
+    color: #fff;
   }
   .num {
     position: absolute;

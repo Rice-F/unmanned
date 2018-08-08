@@ -19,60 +19,30 @@
           </div>
         </div>
         <ul class="cart-list">
-          <li>
+          <li
+            v-for="(item,key) in list"
+            :key="item._id"
+          >
             <div class="left-food">
-              <img src="../assets/images/1.jpg" alt="">
+              <img :src="api + item.imgUrl" alt="">
               <div class="food-info">
-                <p>蛋糕奶茶</p>
-                <p class="price">￥48</p>
+                <p>{{item.title}}</p>
+                <p class="price">￥{{item.price}}</p>
               </div>
             </div>
             <div class="right-amount">
-              <div class="input-minus">-</div>
-              <input class="input-amount" value="1">
-              <div class="input-plus">+</div>
-            </div>
-          </li>
-          <li>
-            <div class="left-food">
-              <img src="../assets/images/1.jpg" alt="">
-              <div class="food-info">
-                <p>蛋糕奶茶</p>
-                <p class="price">￥48</p>
-              </div>
-            </div>
-            <div class="right-amount">
-              <div class="input-minus">-</div>
-              <input class="input-amount" value="1">
-              <div class="input-plus">+</div>
-            </div>
-          </li>
-          <li>
-            <div class="left-food">
-              <img src="../assets/images/1.jpg" alt="">
-              <div class="food-info">
-                <p>蛋糕奶茶</p>
-                <p class="price">￥48</p>
-              </div>
-            </div>
-            <div class="right-amount">
-              <div class="input-minus">-</div>
-              <input class="input-amount" value="1">
-              <div class="input-plus">+</div>
-            </div>
-          </li>
-          <li>
-            <div class="left-food">
-              <img src="../assets/images/1.jpg" alt="">
-              <div class="food-info">
-                <p>蛋糕奶茶</p>
-                <p class="price">￥48</p>
-              </div>
-            </div>
-            <div class="right-amount">
-              <div class="input-minus">-</div>
-              <input class="input-amount" value="1">
-              <div class="input-plus">+</div>
+              <div
+                class="input-minus"
+                @click="minusNum(item,key)"
+              >-</div>
+              <input
+                class="input-amount"
+                v-model="item.num"
+              >
+              <div
+                class="input-plus"
+                @click="plusNum(item)"
+              >+</div>
             </div>
           </li>
         </ul>
@@ -152,18 +122,63 @@
         <img src="../assets/images/menu.png"/>
         <p>菜单</p>
       </div>
-      <div class="footer-cart">
-        <img src="../assets/images/cart.png"/>
-        <p>购物车</p>
-      </div>
     </div>
 </template>
 
 <script>
 import NavFooter from './public/NavFooter'
+import Config from '../model/config'
 export default {
+  mounted () {
+    this.getCartData()
+  },
+  data () {
+    return {
+      api: Config.api,
+      list: []
+    }
+  },
   components: {
     NavFooter
+  },
+  methods: {
+    getCartData () {
+      var api = this.api + 'api/cartlist?uid=a001'
+      this.$http.get(api).then((response) => {
+        console.log(response)
+        this.list = response.body.result
+      }, (err) => {
+        console.log(err)
+      })
+    },
+    minusNum (item, key) {
+      // 本地数量改变后，同时修改服务器数据
+      var productId = item.productId
+      var num = item.num
+      var api = this.api + 'api/decCart?uid=a001&productId=' + productId + '&num=' + num
+      this.$http.get(api).then((response) => {
+        console.log(response)
+      }, (err) => {
+        console.log(err)
+      })
+      if (item.num === 1) {
+        this.list.splice(key, 1)
+      } else {
+        --item.num
+      }
+    },
+    plusNum (item) {
+      // 本地数量改变后，同时修改服务器数据
+      var productId = item._
+      var num = item.num
+      var api = this.api + 'api/incCart?uid=a001&productId=' + productId + '&num=' + num
+      this.$http.get(api).then((response) => {
+        console.log(response)
+      }, (err) => {
+        console.log(err)
+      })
+      ++item.num
+    }
   }
 }
 </script>
