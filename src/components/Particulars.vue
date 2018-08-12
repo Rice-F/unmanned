@@ -5,7 +5,7 @@
       </router-link>
       <div class="p-content">
         <div class="p-info">
-          <img :src="api + list.img_url" alt="">
+          <img :src="imgUrl" alt="">
           <h2>{{list.title}}</h2>
           <p class="price">{{list.price}}/份</p>
         </div>
@@ -56,7 +56,8 @@ export default {
     return {
       api: Config.api,
       list: [],
-      num: 1
+      num: 1,
+      imgUrl: ''
     }
   },
   methods: {
@@ -64,6 +65,9 @@ export default {
       var api = this.api + 'api/productcontent?id=' + id
       this.$http.get(api).then((response) => {
         this.list = response.body.result[0]
+        this.imgUrl = this.api + this.list.img_url
+        console.log(this.imgUrl)
+        console.log(this.list)
       }, (err) => {
         console.log(err)
       })
@@ -80,7 +84,7 @@ export default {
       // 将桌号、菜品名称、价格、数量、菜品id及对应图片post
       var api = this.api + 'api/addcart'
       this.$http.post(api, {
-        uid: 'a001',
+        uid: 'a0b0',
         title: this.list.title,
         price: this.list.price,
         num: this.num,

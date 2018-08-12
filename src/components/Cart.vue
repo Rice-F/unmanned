@@ -24,7 +24,8 @@
             :key="item._id"
           >
             <div class="left-food">
-              <img :src="api + item.imgUrl" alt="">
+              <img v-if="item.img_url" :src="api + item.img_url" alt="">
+              <img v-else :src="api + item.imgUrl" alt="">
               <div class="food-info">
                 <p>{{item.title}}</p>
                 <p class="price">￥{{item.price}}</p>
@@ -143,9 +144,8 @@ export default {
   },
   methods: {
     getCartData () {
-      var api = this.api + 'api/cartlist?uid=a001'
+      var api = this.api + 'api/cartlist?uid=a0b0'
       this.$http.get(api).then((response) => {
-        console.log(response)
         this.list = response.body.result
       }, (err) => {
         console.log(err)
@@ -155,7 +155,7 @@ export default {
       // 本地数量改变后，同时修改服务器数据
       var productId = item.productId
       var num = item.num
-      var api = this.api + 'api/decCart?uid=a001&productId=' + productId + '&num=' + num
+      var api = this.api + 'api/decCart?uid=a0b0&productId=' + productId + '&num=' + num
       this.$http.get(api).then((response) => {
         console.log(response)
       }, (err) => {
@@ -171,7 +171,7 @@ export default {
       // 本地数量改变后，同时修改服务器数据
       var productId = item._
       var num = item.num
-      var api = this.api + 'api/incCart?uid=a001&productId=' + productId + '&num=' + num
+      var api = this.api + 'api/incCart?uid=a0b0&productId=' + productId + '&num=' + num
       this.$http.get(api).then((response) => {
         console.log(response)
       }, (err) => {

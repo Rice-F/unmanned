@@ -117,8 +117,9 @@ export default {
     },
     getCartNum () {
       // 获取购物车点菜总数量
-      var api = this.api + 'api/cartCount?uid = a001'
+      var api = this.api + 'api/cartCount?uid=a0b0'
       this.$http.get(api).then((response) => {
+        console.log(response)
         this.cartNum = response.body.result
       })
     }
