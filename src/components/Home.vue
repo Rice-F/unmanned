@@ -53,15 +53,16 @@
       </div>
     </div>
     <div class="bg"></div>
-    <nav-footer
-      :cartNum = "cartNum"
-    ></nav-footer>
+    <nav-footer></nav-footer>
+    <cart-footer :cartNum="cartNum"></cart-footer>
   </div>
 </template>
 
 <script>
-import NavFooter from './public/NavFooter'
 import Config from '../model/config'
+import NavFooter from './public/NavFooter'
+import CartFooter from './public/CartFooter'
+
 export default {
   mounted () {
     this.asideDomInit()
@@ -76,7 +77,8 @@ export default {
     }
   },
   components: {
-    NavFooter
+    NavFooter,
+    CartFooter
   },
   methods: {
     asideDomInit () {

@@ -119,16 +119,17 @@
         </div>
       </div>
       <nav-footer></nav-footer>
-      <div class="footer-menu">
-        <img src="../assets/images/menu.png"/>
-        <p>菜单</p>
-      </div>
+      <submit-footer></submit-footer>
+      <menu-footer></menu-footer>
     </div>
 </template>
 
 <script>
 import NavFooter from './public/NavFooter'
 import Config from '../model/config'
+import SubmitFooter from './public/SubmitFooter'
+import MenuFooter from './public/MenuFooter'
+
 export default {
   mounted () {
     this.getCartData()
@@ -140,7 +141,9 @@ export default {
     }
   },
   components: {
-    NavFooter
+    NavFooter,
+    SubmitFooter,
+    MenuFooter
   },
   methods: {
     getCartData () {

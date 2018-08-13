@@ -1,50 +1,41 @@
 <template>
-    <div id="footer-nav">
-      <div
-        class="footer-nav"
-        @click="flag=!flag"
-      >
-        <img src="../../assets/images/navigation.png" alt="">
-        <p>导航</p>
-      </div>
-      <div class="footer-cart">
-        <router-link to="/cart">
-          <img src="../../assets/images/cart.png" alt="">
-          <p>购物车</p>
-          <span
-            class="num"
-            v-if="cartNum"
-          >{{cartNum}}</span>
-        </router-link>
-      </div>
-      <div
-        class="footer-nav-show"
-        v-if="flag"
-      >
-        <ul class="list">
-          <li>
-            <img src="../../assets/images/menu.png"/>
-            <p>菜单</p>
-          </li>
-          <li>
-            <img src="../../assets/images/cart.png"/>
-            <p>购物车</p>
-          </li>
-          <li>
-            <img src="../../assets/images/order.png"/>
-            <p>我的订单</p>
-          </li>
-          <li>
-            <img src="../../assets/images/wallet.png"/>
-            <p>结账</p>
-          </li>
-          <li @click="flag=!flag">
-            <img src="../../assets/images/close.png"/>
-            <p>返回</p>
-          </li>
-        </ul>
-      </div>
+  <div>
+    <div
+      class="footer-nav"
+      @click="flag=!flag"
+    >
+      <img src="../../assets/images/navigation.png" alt="">
+      <p>导航</p>
     </div>
+    <div
+      class="footer-nav-show"
+      v-if="flag"
+    >
+      <ul class="list">
+        <li>
+          <img src="../../assets/images/menu.png"/>
+          <p>菜单</p>
+        </li>
+        <li>
+          <img src="../../assets/images/cart.png"/>
+          <p>购物车</p>
+        </li>
+        <li>
+          <img src="../../assets/images/order.png"/>
+          <p>我的订单</p>
+        </li>
+        <li>
+          <img src="../../assets/images/wallet.png"/>
+          <p>结账</p>
+        </li>
+        <li @click="flag=!flag">
+          <img src="../../assets/images/close.png"/>
+          <p>返回</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+
 </template>
 
 <script>
@@ -53,10 +44,7 @@ export default {
     return {
       flag: false
     }
-  },
-  props: [
-    'cartNum'
-  ]
+  }
 }
 </script>
 
@@ -82,41 +70,6 @@ export default {
   }
 }
 
-.footer-cart {
-  position: fixed;
-  bottom: .5rem;
-  right: .5rem;
-  width: 4.4rem;
-  height: 4.4rem;
-  text-align: center;
-  color: #fff;
-  background: #b30000;
-  border-radius: 50%;
-  img {
-    width: 1.8rem;
-    height: 1.8rem;
-    margin-top: .5rem;
-  }
-  p {
-    position: relative;
-    bottom: .2rem;
-    color: #fff;
-  }
-  .num {
-    position: absolute;
-    top: -.5rem;
-    right: -.5rem;
-    display: inline-block;
-    width: 2rem;
-    height: 2rem;
-    line-height: 2rem;
-    text-align: center;
-    color: #fff;
-    background: #b30000;
-    border-radius: 50%;
-
-  }
-}
 .footer-nav-show {
   position: fixed;
   top: 0;
