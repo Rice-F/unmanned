@@ -84,12 +84,12 @@ export default {
       // 将桌号、菜品名称、价格、数量、菜品id及对应图片post
       var api = this.api + 'api/addcart'
       this.$http.post(api, {
-        uid: 'a0b0',
+        uid: 'a424',
         title: this.list.title,
         price: this.list.price,
         num: this.num,
-        productId: this.list._id,
-        imgUrl: this.list.img_url
+        product_id: this.list._id,
+        img_url: this.list.img_url
       }).then((response) => {
         if (response.body.success) {
           this.$router.push({path: 'home'})

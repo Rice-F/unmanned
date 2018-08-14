@@ -80,9 +80,9 @@ export default {
     addPeopleInfo () {
       let api = this.api + 'api/addPeopleInfo'
       this.$http.post(api, {
-        uid: 'a002',
-        currentPeopleNum: this.currentPeopleNum,
-        remark: this.remark
+        uid: 'a424',
+        p_num: this.currentPeopleNum,
+        p_mark: this.remark
       }).then((response) => {
         if (response.body.success) {
           this.$router.push({path: 'home'})

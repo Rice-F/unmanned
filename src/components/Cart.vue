@@ -5,17 +5,23 @@
           <h2>购物车</h2>
           <div class="diner-remark">
             <div class="left">
-              <p>用餐人数：2人</p>
-              <p>备注：无</p>
+              <p>用餐人数：{{orderInfos.p_num}}</p>
+              <p>
+                备注：
+                <span v-if="orderInfos.p_mark">{{orderInfos.p_mark}}</span>
+                <span v-if="!orderInfos.p_mark">无</span>
+              </p>
             </div>
             <div class="right">
-              <img src="../assets/images/edit.png" alt="">
-              <p>修改</p>
+              <router-link to="/editorderinfo">
+                <img src="../assets/images/edit.png" alt="">
+                <p>修改</p>
+              </router-link>
             </div>
           </div>
           <div class="dishes-price">
-            <p>购物车中一共有6个菜</p>
-            <p>合计：<span class="price">￥58</span></p>
+            <p>购物车中一共有{{totalNum}}个菜</p>
+            <p>合计：<span class="price">￥{{totalPrice}}</span></p>
           </div>
         </div>
         <ul class="cart-list">
@@ -133,11 +139,15 @@ import MenuFooter from './public/MenuFooter'
 export default {
   mounted () {
     this.getCartData()
+    this.getOrderInfo()
   },
   data () {
     return {
       api: Config.api,
-      list: []
+      list: [],
+      totalPrice: 0,
+      totalNum: 0,
+      orderInfos: []
     }
   },
   components: {
@@ -146,21 +156,23 @@ export default {
     MenuFooter
   },
   methods: {
+    // 获取用户点单的菜品 显示在购物车页面
     getCartData () {
-      var api = this.api + 'api/cartlist?uid=a0b0'
+      let api = this.api + 'api/cartlist?uid=a424'
       this.$http.get(api).then((response) => {
         this.list = response.body.result
+        this.getTotalResult()
       }, (err) => {
         console.log(err)
       })
     },
     minusNum (item, key) {
       // 本地数量改变后，同时修改服务器数据
-      var productId = item.productId
-      var num = item.num
-      var api = this.api + 'api/decCart?uid=a0b0&productId=' + productId + '&num=' + num
+      let productId = item.productId
+      let num = item.num
+      let api = this.api + 'api/decCart?uid=a424&productId=' + productId + '&num=' + num
       this.$http.get(api).then((response) => {
-        console.log(response)
+        this.getTotalResult()
       }, (err) => {
         console.log(err)
       })
@@ -172,15 +184,37 @@ export default {
     },
     plusNum (item) {
       // 本地数量改变后，同时修改服务器数据
-      var productId = item._
-      var num = item.num
-      var api = this.api + 'api/incCart?uid=a0b0&productId=' + productId + '&num=' + num
+      let productId = item.productId
+      let num = item.num
+      let api = this.api + 'api/incCart?uid=a424&productId=' + productId + '&num=' + num
       this.$http.get(api).then((response) => {
-        console.log(response)
+        this.getTotalResult()
       }, (err) => {
         console.log(err)
       })
       ++item.num
+    },
+    getTotalResult () {
+      // 获取菜单总数量以及总价格
+      let totalPrice = 0
+      let totalNum = 0
+      for (let i = 0; i < this.list.length; i++) {
+        // 遍历已选菜单，用菜品单价*数量获取总价
+        totalPrice += parseFloat(this.list[i].price * this.list[i].num)
+        // 累加各菜品数量获取总数量
+        totalNum += this.list[i].num
+      }
+      this.totalPrice = totalPrice
+      this.totalNum = totalNum
+    },
+    getOrderInfo () {
+      let api = this.api + 'api/peopleInfoList?uid=a424'
+      this.$http.get(api).then((response) => {
+        console.log(response)
+        this.orderInfos = response.body.result[0]
+      }, (err) => {
+        console.log(err)
+      })
     }
   }
 }

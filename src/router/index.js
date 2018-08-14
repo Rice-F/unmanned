@@ -10,6 +10,7 @@ import Order from 'components/Order'
 import Particulars from 'components/Particulars'
 import Search from 'components/Search'
 import Start from 'components/Start'
+import EditOrderInfo from 'components/EditOrderInfo'
 
 // 2.use路由
 Vue.use(Router)
@@ -48,6 +49,10 @@ export default new Router({
     {
       path: '/start',
       component: Start
+    },
+    {
+      path: '/editorderinfo',
+      component: EditOrderInfo
     }
   ]
 })
