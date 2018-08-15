@@ -1,21 +1,23 @@
 <template>
   <div id="home">
+    <!-- 顶部导航 -->
     <header class="index-header">
-      <ul>
-        <li>
-          <img src="../assets/images/rexiao.png" alt="">
-          <p>热销榜</p>
-        </li>
-        <li>
-          <img src="../assets/images/caidan.png" alt="">
-          <p>点过的菜</p>
-        </li>
-        <li>
-          <img src="../assets/images/sousuo.png" alt="">
-          <p>搜你喜欢</p>
-        </li>
-      </ul>
+    <ul>
+      <li>
+        <img src="../assets/images/rexiao.png" alt="">
+        <p>热销榜</p>
+      </li>
+      <li>
+        <img src="../assets/images/caidan.png" alt="">
+        <p>点过的菜</p>
+      </li>
+      <li>
+        <img src="../assets/images/sousuo.png" alt="">
+        <p>搜你喜欢</p>
+      </li>
+    </ul>
     </header>
+    <!-- 侧边菜单栏导航 -->
     <aside class="left-cate">
       <ul>
         <li
@@ -29,19 +31,23 @@
         <p>菜单</p>
       </div>
     </aside>
+    <!-- 菜品信息 -->
     <div class="content">
+      <!-- 遍历渲染菜品分类 -->
       <div
         class="item"
         v-for="item in list"
         :key="item._id"
       >
         <h3 class="item-cate">{{item.title}}</h3>
+        <!-- 在每个菜品分类下遍历渲染菜品 -->
         <ul class="item-list">
           <li
             v-for="dish in item.list"
             :key="dish._id"
           >
             <div class="wrap">
+              <!-- 这里使用动态路由匹配，每一个菜品对应一个id -->
               <router-link :to="'/particulars?id=' + dish._id">
                 <img :src="api + dish.img_url" alt="">
                 <p class="title">{{dish.title}}</p>
@@ -82,10 +88,11 @@ export default {
   },
   methods: {
     asideDomInit () {
-      var leftCate = document.getElementsByClassName('left-cate')[0]
-      var navCate = document.getElementsByClassName('nav-cate')[0]
-      var bg = document.getElementsByClassName('bg')[0]
-      var flag = true
+      let leftCate = document.getElementsByClassName('left-cate')[0]
+      let navCate = document.getElementsByClassName('nav-cate')[0]
+      let bg = document.getElementsByClassName('bg')[0]
+      let flag = true
+      // 点击菜单时，弹出菜单栏和背景层，再次点击菜单或背景层，隐藏菜单和背景层
       bg.onclick = navCate.onclick = function () {
         if (flag) {
           flag = false
@@ -99,7 +106,8 @@ export default {
       }
     },
     requestData () {
-      var api = this.api + 'api/productlist'
+      // 获取菜品信息
+      const api = this.api + 'api/productlist'
       // 注意这里的this指向，箭头函数里的this指向继承自父元素
       this.$http.get(api).then(response => {
         this.list = response.body.result
@@ -109,17 +117,17 @@ export default {
     changeList (key) {
       // 点击侧边栏item时获取相应下标，对应右边同下标分类title
       // 使右边对应内容距离页面顶部距离等于滚动条滚动距离即可
-      var itemCates = document.querySelectorAll('.item-cate')
+      let itemCates = document.querySelectorAll('.item-cate')
       document.documentElement.scrollTop = itemCates[key].offsetTop
       // 正确显示右边对应分类后，背景层和侧边栏隐藏
-      var leftCate = document.getElementsByClassName('left-cate')[0]
-      var bg = document.getElementsByClassName('bg')[0]
+      let leftCate = document.getElementsByClassName('left-cate')[0]
+      let bg = document.getElementsByClassName('bg')[0]
       leftCate.style.transform = 'translate(-100%, 0)'
       bg.style.display = 'none'
     },
     getCartNum () {
-      // 获取购物车点菜总数量
-      var api = this.api + 'api/cartCount?uid=a424'
+      // 获取购物车点菜总数量，通过父子组件传值将总数量传给CartFooter组件
+      const api = this.api + 'api/cartCount?uid=a424'
       this.$http.get(api).then((response) => {
         this.cartNum = response.body.result
       })

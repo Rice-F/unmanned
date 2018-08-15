@@ -1,9 +1,15 @@
 <template>
     <div id="cart">
       <div class="cart-content">
-        <div class="cart-info">
+        <div
+          class="cart-info"
+        >
           <h2>购物车</h2>
-          <div class="diner-remark">
+          <!-- 用餐人数及备注 -->
+          <div
+            class="diner-remark"
+            v-if="totalNum"
+          >
             <div class="left">
               <p>用餐人数：{{orderInfos.p_num}}</p>
               <p>
@@ -19,12 +25,20 @@
               </router-link>
             </div>
           </div>
-          <div class="dishes-price">
+          <!-- 菜品数量及总价 -->
+          <div
+            class="dishes-price"
+            v-if="totalNum"
+          >
             <p>购物车中一共有{{totalNum}}个菜</p>
             <p>合计：<span class="price">￥{{totalPrice}}</span></p>
           </div>
         </div>
-        <ul class="cart-list">
+        <!-- 已点菜品列表 -->
+        <ul
+          class="cart-list"
+          v-if="totalNum"
+        >
           <li
             v-for="(item,key) in list"
             :key="item._id"
@@ -53,77 +67,81 @@
             </div>
           </li>
         </ul>
-        <div class="hot-food">
-          <h3>本店顾客最常点的菜</h3>
-          <div class="listbox">
-            <ul class="item-list">
-              <li>
-                <div class="wrap">
-                  <img src="../assets/images/1.jpg" alt="">
-                  <p class="title">大蒜腊肉</p>
-                  <p class="price">¥26</p>
-                </div>
-              </li>
-              <li>
-                <div class="wrap">
-                  <img src="../assets/images/1.jpg" alt="">
-                  <p class="title">大蒜腊肉</p>
-                  <p class="price">¥26</p>
-                </div>
-              </li>
-              <li>
-                <div class="wrap">
-                  <img src="../assets/images/1.jpg" alt="">
-                  <p class="title">大蒜腊肉</p>
-                  <p class="price">¥26</p>
-                </div>
-              </li>
-              <li>
-                <div class="wrap">
-                  <img src="../assets/images/1.jpg" alt="">
-                  <p class="title">大蒜腊肉</p>
-                  <p class="price">¥26</p>
-                </div>
-              </li>
-              <li>
-                <div class="wrap">
-                  <img src="../assets/images/1.jpg" alt="">
-                  <p class="title">大蒜腊肉</p>
-                  <p class="price">¥26</p>
-                </div>
-              </li>
-              <li>
-                <div class="wrap">
-                  <img src="../assets/images/1.jpg" alt="">
-                  <p class="title">大蒜腊肉</p>
-                  <p class="price">¥26</p>
-                </div>
-              </li>
-              <li>
-                <div class="wrap">
-                  <img src="../assets/images/1.jpg" alt="">
-                  <p class="title">大蒜腊肉</p>
-                  <p class="price">¥26</p>
-                </div>
-              </li>
-              <li>
-                <div class="wrap">
-                  <img src="../assets/images/1.jpg" alt="">
-                  <p class="title">大蒜腊肉</p>
-                  <p class="price">¥26</p>
-                </div>
-              </li>
-              <li>
-                <div class="wrap">
-                  <img src="../assets/images/1.jpg" alt="">
-                  <p class="title">大蒜腊肉</p>
-                  <p class="price">¥26</p>
-                </div>
-              </li>
-            </ul>
-          </div>
+      </div>
+      <div class="hot-food">
+        <h3>本店顾客最常点的菜</h3>
+        <div class="listbox">
+          <ul class="item-list">
+            <li>
+              <div class="wrap">
+                <img src="../assets/images/1.jpg" alt="">
+                <p class="title">大蒜腊肉</p>
+                <p class="price">¥26</p>
+              </div>
+            </li>
+            <li>
+              <div class="wrap">
+                <img src="../assets/images/1.jpg" alt="">
+                <p class="title">大蒜腊肉</p>
+                <p class="price">¥26</p>
+              </div>
+            </li>
+            <li>
+              <div class="wrap">
+                <img src="../assets/images/1.jpg" alt="">
+                <p class="title">大蒜腊肉</p>
+                <p class="price">¥26</p>
+              </div>
+            </li>
+            <li>
+              <div class="wrap">
+                <img src="../assets/images/1.jpg" alt="">
+                <p class="title">大蒜腊肉</p>
+                <p class="price">¥26</p>
+              </div>
+            </li>
+            <li>
+              <div class="wrap">
+                <img src="../assets/images/1.jpg" alt="">
+                <p class="title">大蒜腊肉</p>
+                <p class="price">¥26</p>
+              </div>
+            </li>
+            <li>
+              <div class="wrap">
+                <img src="../assets/images/1.jpg" alt="">
+                <p class="title">大蒜腊肉</p>
+                <p class="price">¥26</p>
+              </div>
+            </li>
+            <li>
+              <div class="wrap">
+                <img src="../assets/images/1.jpg" alt="">
+                <p class="title">大蒜腊肉</p>
+                <p class="price">¥26</p>
+              </div>
+            </li>
+            <li>
+              <div class="wrap">
+                <img src="../assets/images/1.jpg" alt="">
+                <p class="title">大蒜腊肉</p>
+                <p class="price">¥26</p>
+              </div>
+            </li>
+            <li>
+              <div class="wrap">
+                <img src="../assets/images/1.jpg" alt="">
+                <p class="title">大蒜腊肉</p>
+                <p class="price">¥26</p>
+              </div>
+            </li>
+          </ul>
         </div>
       </div>
+      <div
+        class="no-cartList"
+        v-if="!totalNum"
+      >您的购物车空空的，点击菜单开始点菜吧！</div>
       <nav-footer></nav-footer>
       <submit-footer></submit-footer>
       <menu-footer></menu-footer>
@@ -158,7 +176,7 @@ export default {
   methods: {
     // 获取用户点单的菜品 显示在购物车页面
     getCartData () {
-      let api = this.api + 'api/cartlist?uid=a424'
+      const api = this.api + 'api/cartlist?uid=a424'
       this.$http.get(api).then((response) => {
         this.list = response.body.result
         this.getTotalResult()
@@ -170,7 +188,7 @@ export default {
       // 本地数量改变后，同时修改服务器数据
       let productId = item.productId
       let num = item.num
-      let api = this.api + 'api/decCart?uid=a424&productId=' + productId + '&num=' + num
+      const api = this.api + 'api/decCart?uid=a424&productId=' + productId + '&num=' + num
       this.$http.get(api).then((response) => {
         this.getTotalResult()
       }, (err) => {
@@ -208,9 +226,9 @@ export default {
       this.totalNum = totalNum
     },
     getOrderInfo () {
+      // 获取订单信息，人数、备注等
       let api = this.api + 'api/peopleInfoList?uid=a424'
       this.$http.get(api).then((response) => {
-        console.log(response)
         this.orderInfos = response.body.result[0]
       }, (err) => {
         console.log(err)
@@ -248,10 +266,12 @@ export default {
       .right {
         width: 4rem;
         text-align: center;
-        img {
-          width: 1.8rem;
-          height: 1.8rem;
-
+        a {
+          color: #555;
+          img {
+            width: 1.8rem;
+            height: 1.8rem;
+          }
         }
       }
     }
@@ -314,40 +334,6 @@ export default {
       }
     }
   }
-
-  .hot-food {
-    margin: 1rem 0 4rem;
-    padding: .5rem;
-    border-radius: .5rem;
-    background: #fff;
-    h3 {
-      margin-bottom: .5rem;
-      font-size: 1.4rem;
-    }
-    .listbox {
-      width: 100%;
-      overflow-x: auto;
-      .item-list {
-        width: 80rem;
-        li {
-          float: left;
-          box-sizing: border-box;
-          width: 8rem;
-          padding: .5rem;
-          .wrap {
-            width: 100%;
-            background: #fff;
-            border-radius: .5rem;
-            overflow: hidden;
-            img {
-              width: 100%;
-            }
-          }
-        }
-      }
-    }
-  }
-
   .prompt {
     text-align: center;
     line-height: 3;
@@ -355,5 +341,41 @@ export default {
       font-size: 1.8rem;
     }
   }
+}
+.hot-food {
+  margin: 1rem 0 4rem;
+  padding: .5rem;
+  border-radius: .5rem;
+  background: #fff;
+  h3 {
+    margin-bottom: .5rem;
+    font-size: 1.4rem;
+  }
+  .listbox {
+    width: 100%;
+    overflow-x: auto;
+    .item-list {
+      width: 80rem;
+      li {
+        float: left;
+        box-sizing: border-box;
+        width: 8rem;
+        padding: .5rem;
+        .wrap {
+          width: 100%;
+          background: #fff;
+          border-radius: .5rem;
+          overflow: hidden;
+          img {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+.no-cartList {
+  line-height: 3;
+  text-align: center;
 }
 </style>

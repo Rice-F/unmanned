@@ -6,6 +6,7 @@
         </header>
         <p class="notice">请选择正确的用餐人数 ，小二马上给你送餐具</p>
         <div class="content">
+          <!-- 用餐人数 -->
           <ul class="user-list">
             <li
               v-for="item in peopleNum"
@@ -16,6 +17,7 @@
               <span>{{item}}人</span>
             </li>
           </ul>
+          <!-- 备注信息文本框 -->
           <div class="remarks">
             <input
               type="text"
@@ -23,6 +25,7 @@
               v-model="remark"
             >
           </div>
+          <!-- 可选备注信息 -->
           <ul class="remark-list">
             <li
               v-for="(item,index) in remarkInfos"
@@ -69,14 +72,20 @@ export default {
     }
   },
   methods: {
+    // 将可选人数存在变量peopleNum里，循环此变量渲染ul.user-list，item表示每个li渲染的人数
+    // 当用户点击用餐人数的某个li时，将当前item作为参数num传递出来，赋值给currentPeopleNum
+    // 在每个li标签里判断当前currentPeopleNum和item是否相等，如相等则给li标签添加active样式
     addChangeEvent (num) {
-      // 将可选人数存在变量peopleNum里，循环可选人数在页面上
-      // 当点击某个人数item时，将当前人数赋值给currentPeopleNum
       this.currentPeopleNum = num
     },
+    // 将可选备注保存在变量remarkInfos里，循环此变量渲染ulremark-list，item表示每个li渲染的备注
+    // 当用户点击某个可选备注li时，将当前item作为参数传递出来，将item.content拼接进remark变量
+    // 双向绑定remark和input的内容
     addRemarks (remark) {
       this.remark += remark.content + ','
     },
+    // 用户点击“开始点菜”，提交当前桌号、用餐人数、备注信息给服务器
+    // 服务器获取成功并返回相应信息后，通过路由跳转到点菜页面
     addPeopleInfo () {
       let api = this.api + 'api/addPeopleInfo'
       this.$http.post(api, {

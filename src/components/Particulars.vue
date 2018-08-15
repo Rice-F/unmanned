@@ -49,7 +49,8 @@ import Config from '../model/config'
 export default {
   mounted () {
     // get传值
-    var id = this.$route.query.id
+    // 动态路由获取传过来的id
+    let id = this.$route.query.id
     this.requestData(id)
   },
   data () {
@@ -62,12 +63,11 @@ export default {
   },
   methods: {
     requestData (id) {
-      var api = this.api + 'api/productcontent?id=' + id
+      // 获取菜品详情
+      const api = this.api + 'api/productcontent?id=' + id
       this.$http.get(api).then((response) => {
         this.list = response.body.result[0]
         this.imgUrl = this.api + this.list.img_url
-        console.log(this.imgUrl)
-        console.log(this.list)
       }, (err) => {
         console.log(err)
       })
@@ -82,7 +82,7 @@ export default {
     },
     addCart () {
       // 将桌号、菜品名称、价格、数量、菜品id及对应图片post
-      var api = this.api + 'api/addcart'
+      const api = this.api + 'api/addcart'
       this.$http.post(api, {
         uid: 'a424',
         title: this.list.title,
