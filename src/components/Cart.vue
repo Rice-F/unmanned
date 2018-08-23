@@ -186,10 +186,12 @@ export default {
     },
     minusNum (item, key) {
       // 本地数量改变后，同时修改服务器数据
-      let productId = item.productId
+      let productId = item.product_id
       let num = item.num
-      const api = this.api + 'api/decCart?uid=a424&productId=' + productId + '&num=' + num
+      const api = this.api + 'api/decCart?uid=a424&product_id=' + productId + '&num=' + num
       this.$http.get(api).then((response) => {
+        // 用户点击-后，客户端向服务端emit addCart
+        this.$socket.emit('addcart', 'added')
         this.getTotalResult()
       }, (err) => {
         console.log(err)
@@ -202,10 +204,12 @@ export default {
     },
     plusNum (item) {
       // 本地数量改变后，同时修改服务器数据
-      let productId = item.productId
+      let productId = item.product_id
       let num = item.num
-      let api = this.api + 'api/incCart?uid=a424&productId=' + productId + '&num=' + num
+      let api = this.api + 'api/incCart?uid=a424&product_id=' + productId + '&num=' + num
       this.$http.get(api).then((response) => {
+        // 用户点击加入购物车后，客户端向服务端emit addCart
+        this.$socket.emit('addcart', 'added')
         this.getTotalResult()
       }, (err) => {
         console.log(err)
@@ -233,6 +237,12 @@ export default {
       }, (err) => {
         console.log(err)
       })
+    }
+  },
+  sockets: {
+    addcart () {
+      // 更新购物车数据
+      this.getCartData()
     }
   }
 }

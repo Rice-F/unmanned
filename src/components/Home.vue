@@ -132,6 +132,13 @@ export default {
         this.cartNum = response.body.result
       })
     }
+  },
+  sockets: {
+    // 服务端emit addCart，客户端监听addCart事件直接定义为addCart(){}
+    addcart () {
+      // 更新购物车数量
+      this.getCartNum()
+    }
   }
 }
 </script>

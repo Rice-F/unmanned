@@ -91,6 +91,8 @@ export default {
         product_id: this.list._id,
         img_url: this.list.img_url
       }).then((response) => {
+        // 用户点击加入购物车后，客户端向服务端emit addCart
+        this.$socket.emit('addcart', 'added')
         if (response.body.success) {
           this.$router.push({path: 'home'})
         }
