@@ -46,6 +46,8 @@
 
 <script>
 import Config from '../model/config'
+import storage from '../model/storage'
+
 export default {
   mounted () {
     // get传值
@@ -82,9 +84,10 @@ export default {
     },
     addCart () {
       // 将桌号、菜品名称、价格、数量、菜品id及对应图片post
+      let uid = storage.get('roomId')
       const api = this.api + 'api/addcart'
       this.$http.post(api, {
-        uid: 'a424',
+        uid: uid,
         title: this.list.title,
         price: this.list.price,
         num: this.num,

@@ -50,6 +50,8 @@
 
 <script>
 import Config from '../model/config'
+import storage from '../model/storage'
+
 export default {
   mounted () {
     this.getOrderInfo()
@@ -88,8 +90,9 @@ export default {
     },
     addPeopleInfo () {
       let api = this.api + 'api/addPeopleInfo'
+      let uid = storage.get('roomId')
       this.$http.post(api, {
-        uid: 'a424',
+        uid: uid,
         p_num: this.currentPeopleNum,
         p_mark: this.remark
       }).then((response) => {
@@ -102,7 +105,8 @@ export default {
     },
     getOrderInfo () {
       // 获取订单信息，人数、备注等
-      let api = this.api + 'api/peopleInfoList?uid=a424'
+      let uid = storage.get('roomId')
+      let api = this.api + 'api/peopleInfoList?uid=' + uid
       this.$http.get(api).then((response) => {
         this.orderInfos = response.body.result[0]
         this.currentPeopleNum = this.orderInfos.p_num

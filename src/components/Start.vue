@@ -48,6 +48,8 @@
 
 <script>
 import Config from '../model/config'
+import storage from '../model/storage'
+
 export default {
   data () {
     return {
@@ -88,8 +90,9 @@ export default {
     // 服务器获取成功并返回相应信息后，通过路由跳转到点菜页面
     addPeopleInfo () {
       let api = this.api + 'api/addPeopleInfo'
+      let uid = storage.get('roomId')
       this.$http.post(api, {
-        uid: 'a424',
+        uid: uid,
         p_num: this.currentPeopleNum,
         p_mark: this.remark
       }).then((response) => {

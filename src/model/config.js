@@ -1,4 +1,4 @@
-var config = {
+let config = {
   api: 'http://a.itying.com/'
 }
 

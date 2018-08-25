@@ -153,6 +153,7 @@ import NavFooter from './public/NavFooter'
 import Config from '../model/config'
 import SubmitFooter from './public/SubmitFooter'
 import MenuFooter from './public/MenuFooter'
+import storage from '../model/storage'
 
 export default {
   mounted () {
@@ -176,7 +177,8 @@ export default {
   methods: {
     // 获取用户点单的菜品 显示在购物车页面
     getCartData () {
-      const api = this.api + 'api/cartlist?uid=a424'
+      let uid = storage.get('roomId')
+      const api = this.api + 'api/cartlist?uid=' + uid
       this.$http.get(api).then((response) => {
         this.list = response.body.result
         this.getTotalResult()
@@ -188,7 +190,8 @@ export default {
       // 本地数量改变后，同时修改服务器数据
       let productId = item.product_id
       let num = item.num
-      const api = this.api + 'api/decCart?uid=a424&product_id=' + productId + '&num=' + num
+      let uid = storage.get('roomId')
+      const api = this.api + 'api/decCart?uid=' + uid + '&product_id=' + productId + '&num=' + num
       this.$http.get(api).then((response) => {
         // 用户点击-后，客户端向服务端emit addCart
         this.$socket.emit('addcart', 'added')
@@ -206,7 +209,8 @@ export default {
       // 本地数量改变后，同时修改服务器数据
       let productId = item.product_id
       let num = item.num
-      let api = this.api + 'api/incCart?uid=a424&product_id=' + productId + '&num=' + num
+      let uid = storage.get('roomId')
+      let api = this.api + 'api/incCart?uid=' + uid + '&product_id=' + productId + '&num=' + num
       this.$http.get(api).then((response) => {
         // 用户点击加入购物车后，客户端向服务端emit addCart
         this.$socket.emit('addcart', 'added')
@@ -231,7 +235,8 @@ export default {
     },
     getOrderInfo () {
       // 获取订单信息，人数、备注等
-      let api = this.api + 'api/peopleInfoList?uid=a424'
+      let uid = storage.get('roomId')
+      let api = this.api + 'api/peopleInfoList?uid=' + uid
       this.$http.get(api).then((response) => {
         this.orderInfos = response.body.result[0]
       }, (err) => {

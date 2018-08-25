@@ -68,6 +68,7 @@
 import Config from '../model/config'
 import NavFooter from './public/NavFooter'
 import CartFooter from './public/CartFooter'
+import storage from '../model/storage'
 
 export default {
   mounted () {
@@ -127,7 +128,8 @@ export default {
     },
     getCartNum () {
       // 获取购物车点菜总数量，通过父子组件传值将总数量传给CartFooter组件
-      const api = this.api + 'api/cartCount?uid=a424'
+      let uid = storage.get('roomId')
+      const api = this.api + 'api/cartCount?uid=' + uid
       this.$http.get(api).then((response) => {
         this.cartNum = response.body.result
       })
