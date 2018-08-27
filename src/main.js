@@ -9,7 +9,7 @@ import storage from './model/storage'
 // 获取url传来的桌号
 let roomId = window.location.hash.split('=')[1]
 // 将桌号保存在localstorage中
-storage.set(roomId, roomId)
+storage.set('roomId', roomId)
 
 Vue.config.productionTip = false
 Vue.use(VueResource)

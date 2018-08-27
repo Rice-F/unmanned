@@ -51,6 +51,10 @@ import Config from '../model/config'
 import storage from '../model/storage'
 
 export default {
+  created () {
+    // 判断用户是否已经选择用餐人数，如果已选择则扫码直接进入点菜页面
+    this.getOrderInfo()
+  },
   data () {
     return {
       peopleNum: 12,
@@ -97,6 +101,22 @@ export default {
         p_mark: this.remark
       }).then((response) => {
         if (response.body.success) {
+          this.$router.push({path: 'home'})
+        }
+      }, (err) => {
+        console.log(err)
+      })
+    },
+    getOrderInfo () {
+      // 获取订单信息，人数、备注等
+      let uid = storage.get('roomId')
+      let api = this.api + 'api/peopleInfoList?uid=' + uid
+      this.$http.get(api).then((response) => {
+        console.log(this.showLoading)
+        // console.log(response)
+        let orderInfo = response.body.result
+        // 订单信息长度不为0表示已选用餐人数，这时直接跳转至点菜页面
+        if (orderInfo.length > 0) {
           this.$router.push({path: 'home'})
         }
       }, (err) => {

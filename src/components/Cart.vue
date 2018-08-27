@@ -178,6 +178,7 @@ export default {
     // 获取用户点单的菜品 显示在购物车页面
     getCartData () {
       let uid = storage.get('roomId')
+      console.log(123)
       const api = this.api + 'api/cartlist?uid=' + uid
       this.$http.get(api).then((response) => {
         this.list = response.body.result
