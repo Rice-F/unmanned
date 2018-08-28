@@ -5,48 +5,64 @@
           <div class="order-receive">
             <img src="../assets/images/timer.png" alt="">
             <div class="receive-info">
-              <h2>119号桌门店接单</h2>
+              <h2>{{list.uid}}号桌门店接单</h2>
               <p>请及时联系服务员确认菜品信息！</p>
             </div>
           </div>
-          <h3>已点菜品9份，合计：<span>60元</span></h3>
+          <h3>已点菜品{{list.total_num}}份，合计：<span>{{list.total_price}}元</span></h3>
         </div>
         <div class="order-list">
           <h3>菜品详情</h3>
           <ul class="items">
-            <li>
-              <div class="item">白雪芒果黑糯米</div>
-              <div class="amount">1份</div>
-              <div class="price">12元</div>
-            </li>
-            <li>
-              <div class="item">白雪芒果黑糯米</div>
-              <div class="amount">1份</div>
-              <div class="price">12元</div>
-            </li>
-            <li>
-              <div class="item">白雪芒果黑糯米</div>
-              <div class="amount">1份</div>
-              <div class="price">12元</div>
-            </li>
-            <li>
-              <div class="item">白雪芒果黑糯米</div>
-              <div class="amount">1份</div>
-              <div class="price">12元</div>
-            </li>
-            <li>
-              <div class="item">白雪芒果黑糯米</div>
-              <div class="amount">1份</div>
-              <div class="price">12元</div>
+            <li
+              v-for="item in list.items"
+              :key="item_id"
+            >
+              <div class="item">{{item.title}}/{{item.status}}</div>
+              <div class="amount">{{item.num}}份</div>
+              <div class="price">{{item.price}}元</div>
             </li>
           </ul>
         </div>
       </div>
+      <nav-footer></nav-footer>
+      <menu-footer></menu-footer>
     </div>
 </template>
 
 <script>
+import NavFooter from './public/NavFooter'
+import MenuFooter from './public/MenuFooter'
+import Config from '../model/config'
+import storage from '../model/storage'
+
 export default {
+  mounted () {
+    this.getOrder()
+  },
+  data () {
+    return {
+      api: Config.api,
+      list: []
+    }
+  },
+  components: {
+    NavFooter,
+    MenuFooter
+  },
+  methods: {
+    getOrder () {
+      let uid = storage.get('roomId')
+      let api = this.api + 'api/getOrder?uid=' + uid
+
+      this.$http.get(api).then((response) => {
+        console.log(response)
+        this.list = response.body.result[0]
+      }, (err) => {
+        console.log(err)
+      })
+    }
+  }
 }
 </script>
 

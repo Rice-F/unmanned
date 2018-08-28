@@ -1,5 +1,9 @@
 <template>
     <div id="start">
+      <!--<div-->
+        <!--class="load"-->
+        <!--v-show="!showLoading"-->
+      <!--&gt;loading...</div>-->
       <div class="start-content">
         <header class="start-header">
           <img src="../assets/images/canju.png" alt="">用餐人数
@@ -112,8 +116,8 @@ export default {
       let uid = storage.get('roomId')
       let api = this.api + 'api/peopleInfoList?uid=' + uid
       this.$http.get(api).then((response) => {
-        console.log(this.showLoading)
-        // console.log(response)
+        // 提前存好showLoading变量，当有已选人数时，则显示loading效果并直接跳转，且不显示选择人数的部分
+        // this.showLoading = true
         let orderInfo = response.body.result
         // 订单信息长度不为0表示已选用餐人数，这时直接跳转至点菜页面
         if (orderInfo.length > 0) {

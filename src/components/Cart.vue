@@ -8,7 +8,7 @@
           <!-- 用餐人数及备注 -->
           <div
             class="diner-remark"
-            v-if="totalNum"
+            v-if="orderInfos.p_num"
           >
             <div class="left">
               <p>用餐人数：{{orderInfos.p_num}}</p>
@@ -142,8 +142,14 @@
         class="no-cartList"
         v-if="!totalNum"
       >您的购物车空空的，点击菜单开始点菜吧！</div>
+      <div
+        class="footer-submit"
+        @click="subOrder()"
+      >
+        <img src="../assets/images/doorder.png" alt="">
+        <p>下单</p>
+      </div>
       <nav-footer></nav-footer>
-      <submit-footer></submit-footer>
       <menu-footer></menu-footer>
     </div>
 </template>
@@ -151,7 +157,6 @@
 <script>
 import NavFooter from './public/NavFooter'
 import Config from '../model/config'
-import SubmitFooter from './public/SubmitFooter'
 import MenuFooter from './public/MenuFooter'
 import storage from '../model/storage'
 
@@ -171,14 +176,12 @@ export default {
   },
   components: {
     NavFooter,
-    SubmitFooter,
     MenuFooter
   },
   methods: {
     // 获取用户点单的菜品 显示在购物车页面
     getCartData () {
       let uid = storage.get('roomId')
-      console.log(123)
       const api = this.api + 'api/cartlist?uid=' + uid
       this.$http.get(api).then((response) => {
         this.list = response.body.result
@@ -240,6 +243,35 @@ export default {
       let api = this.api + 'api/peopleInfoList?uid=' + uid
       this.$http.get(api).then((response) => {
         this.orderInfos = response.body.result[0]
+      }, (err) => {
+        console.log(err)
+      })
+    },
+    subOrder () {
+      // 下单，提交桌号、人数、备注、总价及总数
+      let uid = storage.get('roomId')
+      let num = this.orderInfos.p_num
+      let remark = this.orderInfos.p_mark
+      let totalPrice = this.totalPrice
+      let totalNum = this.totalNum
+      // 把数组转换成字符串传给服务器
+      let list = JSON.stringify(this.list)
+
+      // 将cart页面数据post给服务器
+      let api = this.api + 'api/addOrder'
+      this.$http.post(api, {
+        uid,
+        p_num: num,
+        p_mark: remark,
+        total_price: totalPrice,
+        total_num: totalNum,
+        order: list
+      }).then((response) => {
+        if (response.body.success) {
+          this.$router.push({path: 'order'})
+        } else {
+          alert('提交数据有误！')
+        }
       }, (err) => {
         console.log(err)
       })
@@ -393,5 +425,25 @@ export default {
 .no-cartList {
   line-height: 3;
   text-align: center;
+}
+.footer-submit {
+  position: fixed;
+  bottom: .5rem;
+  right: .5rem;
+  width: 4.4rem;
+  height: 4.4rem;
+  text-align: center;
+  color: #fff;
+  background: #000;
+  border-radius: 50%;
+  img {
+    width: 1.8rem;
+    height: 1.8rem;
+    margin-top: .5rem;
+  }
+  p {
+    position: relative;
+    bottom: .2rem;
+  }
 }
 </style>

@@ -21,8 +21,10 @@
           <p>购物车</p>
         </li>
         <li>
-          <img src="../../assets/images/order.png"/>
-          <p>我的订单</p>
+          <router-link to="order">
+            <img src="../../assets/images/order.png"/>
+            <p>我的订单</p>
+          </router-link>
         </li>
         <li>
           <img src="../../assets/images/wallet.png"/>
