@@ -16,7 +16,7 @@
           <ul class="items">
             <li
               v-for="item in list.items"
-              :key="item_id"
+              :key="item._id"
             >
               <div class="item">{{item.title}}/{{item.status}}</div>
               <div class="amount">{{item.num}}份</div>
@@ -24,6 +24,12 @@
             </li>
           </ul>
         </div>
+      </div>
+      <div
+        class="footer-pay"
+        @click="doPay()"
+      >
+        <p>立即支付</p>
       </div>
       <nav-footer></nav-footer>
       <menu-footer></menu-footer>
@@ -56,8 +62,24 @@ export default {
       let api = this.api + 'api/getOrder?uid=' + uid
 
       this.$http.get(api).then((response) => {
-        console.log(response)
         this.list = response.body.result[0]
+      }, (err) => {
+        console.log(err)
+      })
+    },
+    doPay () {
+      // 立即支付
+      let that = this
+      let uid = storage.get('roomId')
+      let api = this.api + 'api/doPay'
+      this.$http.post(api, {
+        uid,
+        toal_price: that.list.total_price,
+        order_id: that.list.order_id,
+        return_url: 'http://localhost:8080/#/success'
+      }).then((response) => {
+        console.log(response)
+        location.href = response.body.result.data
       }, (err) => {
         console.log(err)
       })
@@ -164,6 +186,23 @@ export default {
         border-radius: .5rem;
       }
     }
+  }
+}
+.footer-pay {
+  position: fixed;
+  bottom: .5rem;
+  right: .5rem;
+  width: 4.4rem;
+  height: 4.4rem;
+  margin-left: -2.2rem;
+  text-align: center;
+  color: #fff;
+  background: #b30000;
+  border-radius: 50%;
+  p {
+    position: relative;
+    line-height: 4.4rem;
+    color: #fff;
   }
 }
 </style>
